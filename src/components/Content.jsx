@@ -5,12 +5,12 @@ import React, { useEffect } from "react";
 
 export default function Content() {
     const [content, setContent] = React.useState(null);
-    console.log(content);
+    // console.log(content);
 
     async function getUser() {
         try {
             const response = await axios.get('https://jsonplaceholder.typicode.com/photos?_limit=50');
-            console.log(response);
+            // console.log(response);
             setContent(response.data);
 
         } catch (error) {
@@ -22,8 +22,8 @@ export default function Content() {
         getUser()
     }, [])
 
-    console.log(content);
-    if (!content) return "No post!"
+    // console.log(content);
+    if (!content) return "Loading...."
 
     return (
         <Box pl={'80px'} pr={'80px'}>
@@ -48,11 +48,11 @@ export default function Content() {
                         </SimpleGrid>
                     </TabPanel>
                     <TabPanel>
-                        <SimpleGrid columns={[2, null, 3]} spacing='40px' >
+                        <SimpleGrid columns={[2, null, 3]} spacing='40px' paddingLeft='80px'>
                             {
                                 content.map((data) => (
                                     <Box >
-                                        <Image src={data.url}></Image>
+                                        <Image src={data.thumbnailUrl}></Image>
                                     </Box>
                                 ))
                             }

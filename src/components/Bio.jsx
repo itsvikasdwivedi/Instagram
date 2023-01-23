@@ -2,15 +2,16 @@ import getPhotoUrl from 'get-photo-url'
 import { useEffect, useState } from 'react'
 import profileIcon from '../assets/profileIcon.svg'
 import { db } from '../dexie'
-import { Box, Button,  Flex,  HStack, Spacer, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormLabel, HStack, Input, Modal, ModalCloseButton, ModalContent, ModalOverlay, Spacer, Text, useDisclosure } from '@chakra-ui/react'
 import { MdVerified } from 'react-icons/md';
-import{BsThreeDots} from 'react-icons/bs'
+import { BsThreeDots } from 'react-icons/bs'
+
 const Bio = () => {
   const [userDetails, setUserDetails] = useState({
     name: 'dev-vikas',
     about: 'Practice Makes Improvement',
   })
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [editFormIsOpen, setEditFormIsOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(profileIcon);
 
@@ -44,17 +45,31 @@ const Bio = () => {
   }
 
   const editForm = (
-    <form className="edit-bio-form" onSubmit={(e) => updateUserDetails(e)}>
-      <input type="text" id="" name="nameOfUser" defaultValue={userDetails?.name} placeholder="Your name" required />
-      <input type="text" id="" name="aboutUser" defaultValue={userDetails?.about} placeholder="About you" required />
-      <br />
-      <button type="button" className="cancel-button Btn" onClick={() => setEditFormIsOpen(false)}>
-        Cancel
-      </button>
-      <button type="submit" className='Btn'>Save</button>
-    </form>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <Box onClick={() => setEditFormIsOpen(false)}>
+        <ModalCloseButton/>
+        </Box>
+        <Box margin={'auto'} paddingTop={'20px'}>
+          <FormControl className='edit-bio-form' onSubmit={(e) => updateUserDetails(e)} isRequired>
+            <FormLabel>Edit Your Username</FormLabel>
+            <Input type="text" name="nameOfUser" defaultValue={userDetails?.name} placeholder="Your name" variant='filled' required />
+            <br />
+            <br />
+            <FormLabel>Edit Your Bio</FormLabel>
+            <Input type="text" name="aboutUser" defaultValue={userDetails?.about} placeholder="About you" variant='filled' required />
+            <br />
+            <HStack spacing='24px' padding={'15'} marginTop={'10'}>
+              <Button type="button" colorScheme='messenger' onClick={() => setEditFormIsOpen(false)}>Cancel</Button>
+              <Button type="submit" colorScheme='messenger'>Save</Button>
+            </HStack>
+          </FormControl>
+
+        </Box>
+      </ModalContent>
+    </Modal>
   )
-  const editButton = <button className='Btn' onClick={() => setEditFormIsOpen(true)}>Edit</button>
 
   return (
     <section className="bio">
@@ -66,31 +81,83 @@ const Bio = () => {
       </label>
 
       <Box className="profile-info">
-      <HStack spacing='20px'>
+        <HStack spacing='20px'>
 
-       <Flex alignItems={'center'}>
-        <Box>
-          <Text fontSize='xl'>{userDetails?.name} 
-          </Text>
-        </Box>
-          <Spacer/>
-        <Box>
-          <MdVerified color='#0095f6'/>
-        </Box>
-       </Flex>
-    
-        <Button size='sm'>
-          Follow
-        </Button>
-        <Button size='sm' colorScheme='gray'>Message</Button>
+          <Flex alignItems={'center'}>
+            <Box>
+              <Text fontSize='xl'>{userDetails?.name}
+              </Text>
+            </Box>
+            <Spacer />
+            <Box>
+              <MdVerified color='#0095f6' />
+            </Box>
+          </Flex>
 
-        <BsThreeDots/>
+          <Button size='sm'>
+            Follow
+          </Button>
+
+          <Button size='sm' colorScheme='gray'>Message</Button>
+          {editFormIsOpen ? editForm :
+            <Button size='xs'
+              colorScheme={'black'}
+              fontSize={'m'}
+              fontWeight={600}
+              variant={'link'}
+              onClick={() => {setEditFormIsOpen(true); onOpen(); }}>
+
+              <BsThreeDots />
+
+            </Button>
+          }
+
         </HStack>
-        
 
-        <p className="about">{userDetails?.about}</p>
+        <br />
+        <HStack spacing={'26px'}>
+          <Button
+            colorScheme={'black'}
+            fontSize={'m'}
+            fontWeight={600}
+            variant={'link'}
+            _hover={{
+              color: 'grey',
+            }}
+          >
+            50 posts
+          </Button>
+          <Button
+            colorScheme={'black'}
+            fontSize={'m'}
+            fontWeight={600}
+            variant={'link'}
+            _hover={{
+              color: 'grey',
+            }}
+          >
+            773 followers
+          </Button>
+          <Button
+            colorScheme={'black'}
+            fontSize={'m'}
+            fontWeight={600}
+            variant={'link'}
+            _hover={{
+              color: 'grey',
+            }}
+          >
+            273 following
+          </Button>
 
-        {editFormIsOpen ? editForm : editButton}
+
+        </HStack>
+
+
+        <Box mt={'20'}>
+          <Text>{userDetails?.about}</Text>
+        </Box>
+
       </Box>
     </section>
   )
