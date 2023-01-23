@@ -2,10 +2,12 @@ import getPhotoUrl from 'get-photo-url'
 import { useEffect, useState } from 'react'
 import profileIcon from '../assets/profileIcon.svg'
 import { db } from '../dexie'
-
+import { Box, Button,  Flex,  HStack, Spacer, Text } from '@chakra-ui/react'
+import { MdVerified } from 'react-icons/md';
+import{BsThreeDots} from 'react-icons/bs'
 const Bio = () => {
   const [userDetails, setUserDetails] = useState({
-    name: 'Vikas Dwivedi',
+    name: 'dev-vikas',
     about: 'Practice Makes Improvement',
   })
 
@@ -46,14 +48,14 @@ const Bio = () => {
       <input type="text" id="" name="nameOfUser" defaultValue={userDetails?.name} placeholder="Your name" required />
       <input type="text" id="" name="aboutUser" defaultValue={userDetails?.about} placeholder="About you" required />
       <br />
-      <button type="button" className="cancel-button" onClick={() => setEditFormIsOpen(false)}>
+      <button type="button" className="cancel-button Btn" onClick={() => setEditFormIsOpen(false)}>
         Cancel
       </button>
-      <button type="submit">Save</button>
+      <button type="submit" className='Btn'>Save</button>
     </form>
   )
-  const editButton = <button onClick={() => setEditFormIsOpen(true)}>Edit</button>
-  
+  const editButton = <button className='Btn' onClick={() => setEditFormIsOpen(true)}>Edit</button>
+
   return (
     <section className="bio">
       <input type="file" accept="image/*" name="photo" id="profilePhotoInput" />
@@ -63,12 +65,33 @@ const Bio = () => {
         </div>
       </label>
 
-      <div className="profile-info">
-        <p className="name">{userDetails?.name}</p>
+      <Box className="profile-info">
+      <HStack spacing='20px'>
+
+       <Flex alignItems={'center'}>
+        <Box>
+          <Text fontSize='xl'>{userDetails?.name} 
+          </Text>
+        </Box>
+          <Spacer/>
+        <Box>
+          <MdVerified color='#0095f6'/>
+        </Box>
+       </Flex>
+    
+        <Button size='sm'>
+          Follow
+        </Button>
+        <Button size='sm' colorScheme='gray'>Message</Button>
+
+        <BsThreeDots/>
+        </HStack>
+        
+
         <p className="about">{userDetails?.about}</p>
 
         {editFormIsOpen ? editForm : editButton}
-      </div>
+      </Box>
     </section>
   )
 }

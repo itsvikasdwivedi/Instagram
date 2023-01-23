@@ -3,7 +3,7 @@ body {
   margin: 0;
 }
 
-button {
+.Btn{
   cursor: pointer;
   padding: unset;
   border: unset;
@@ -12,14 +12,6 @@ button {
   border-radius: 5px;
 }
 
-
-.logo {
-  text-decoration: none;
-}
-
-.logo > img {
-  vertical-align: middle;
-}
 
 .search {
   background: #fafafa;
@@ -55,7 +47,6 @@ button {
   font-family: Arial, Helvetica, sans-serif;
   padding: 3em 0 2em 5em;
   border-bottom: 0.2px solid #dbdbdb;
-  margin-top: 5em;
   margin-bottom: 2em;
 }
 
@@ -92,18 +83,12 @@ button {
   opacity: 0.7;
 }
 
-.profile-info .name {
-  font-size: 1.7em;
-  color: #545454;
-  margin-bottom: 0;
-}
-
 .profile-info .about {
   font-size: 1.2em;
   color: #545454;
 }
 
-.profile-info button {
+.profile-info .Btn {
   background-color: #0095f6;
   color: #fff;
   font-size: 1.1em;
@@ -111,7 +96,7 @@ button {
   height: 2em;
 }
 
-.profile-info button:hover {
+.profile-info .Btn:hover {
   background-color: #0081d6;
 }
 
@@ -124,12 +109,12 @@ button {
   margin-top: 0.5em;
 }
 
-.edit-bio-form button {
+.edit-bio-form .Btn {
   margin: 1em 1em 0 0;
 }
 
 .edit-bio-form .cancel-button {
-  background-color: #890000;
+  background-color:#f15021;
 }
 
 #addPhotoInput {
